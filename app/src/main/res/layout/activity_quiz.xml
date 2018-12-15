@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="1"
+    tools:context="com.ahn.cysi.canyousolveit.QuizActivity">
+
+    <EditText
+        android:id="@+id/quiz_title"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.1"
+        android:layout_margin="10dp"
+        android:focusable="false"
+        android:hint="title"/>
+
+    <EditText
+        android:id="@+id/quiz_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.8"
+        android:layout_margin="10dp"
+        android:hint="content"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.1"
+        android:layout_margin="10dp"
+        android:weightSum="1"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/quiz_hint"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.8"
+            android:focusable="false"
+            android:hint="hint"/>
+
+        <Button
+            android:id="@+id/quiz_ok"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2"
+            android:gravity="center"
+            android:text="OK"/>
+
+    </LinearLayout>
+
+</LinearLayout>
