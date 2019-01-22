@@ -1,6 +1,8 @@
 package com.ahn.cysi.canyousolveit;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -13,7 +15,6 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -100,13 +101,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
 
             case R.id.logout:
-                if(LoginActivity.prefEditor != null) {
-                    LoginActivity.prefEditor.clear();
-                    LoginActivity.prefEditor.commit();
-                }
+                SharedPreferences auto = getSharedPreferences("AUTO", Activity.MODE_PRIVATE);
+                SharedPreferences.Editor editor = auto.edit();
+                editor.clear();
+                editor.commit();
 
                 startActivity(new Intent(MainActivity.this, LoginActivity.class));
                 finish();
+
                 break;
         }
 

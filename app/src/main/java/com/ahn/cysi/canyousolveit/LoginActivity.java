@@ -51,11 +51,12 @@ public class LoginActivity extends AppCompatActivity {
         mEditPassword.setFilters(new InputFilter[] { filter });
     }
 
+    @SuppressWarnings("unused")
     @OnClick(R.id.bt_login)
-    public void login(View view) {
-        Snackbar.make(view, "login", Snackbar.LENGTH_SHORT).show();
-
+    protected void login(View view) {
         if(checkEmail(mEditLoginEmail.getText().toString())) {
+            Snackbar.make(view, "login", Snackbar.LENGTH_SHORT).show();
+
             preferences = getSharedPreferences("AUTO", Activity.MODE_PRIVATE);
             prefEditor = preferences.edit();
             prefEditor.putString("EMAIL", mEditLoginEmail.getText().toString());
@@ -67,9 +68,12 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    @SuppressWarnings("unused")
     @OnClick(R.id.bt_signup)
-    public void signUp(View view) {
+    protected void signUp(View view) {
         Snackbar.make(view, "sign up", Snackbar.LENGTH_SHORT).show();
+
+        startActivity(new Intent(LoginActivity.this, SignUpActivity.class));
     }
 
     /**
@@ -77,7 +81,7 @@ public class LoginActivity extends AppCompatActivity {
      * @param email
      * @return
      */
-    public boolean checkEmail(String email) {
+    protected boolean checkEmail(String email) {
         String regex = "^[_a-zA-Z0-9-\\.]+@[\\.a-zA-Z0-9-]+\\.[a-zA-Z]+$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(email);
