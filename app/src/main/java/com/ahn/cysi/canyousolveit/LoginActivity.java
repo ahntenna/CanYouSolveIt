@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.text.Spanned;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,6 +19,11 @@ import java.util.regex.Pattern;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -26,8 +32,8 @@ public class LoginActivity extends AppCompatActivity {
     @BindView(R.id.bt_login) Button mEditBtLogin;
     @BindView(R.id.bt_signup) Button mEditBtSignUp;
 
-    public static String email = "root@admin.com";
-    public static String pwd = "root";
+    private Retrofit mRetrofit;
+    private RetrofitBase mRetrofitBase;
 
     public static SharedPreferences preferences;
     public static SharedPreferences.Editor prefEditor;
@@ -41,31 +47,62 @@ public class LoginActivity extends AppCompatActivity {
         preferences = getSharedPreferences("AUTO", Activity.MODE_PRIVATE);
         String email = preferences.getString("EMAIL",null);
         String pwd = preferences.getString("PASSWORD",null);
-        if(email != null && pwd != null
-                && email.equals(this.email) && pwd.equals(this.pwd)) {
+
+        if(email != null && pwd != null) {
             startActivity(new Intent(LoginActivity.this, MainActivity.class));
             finish();
         }
 
         mEditLoginEmail.setFilters(new InputFilter[] { filter });
-        mEditPassword.setFilters(new InputFilter[] { filter });
     }
 
     @SuppressWarnings("unused")
     @OnClick(R.id.bt_login)
-    protected void login(View view) {
-        if(checkEmail(mEditLoginEmail.getText().toString())) {
-            Snackbar.make(view, "login", Snackbar.LENGTH_SHORT).show();
+    protected void login(final View view) {
+        mRetrofit = new Retrofit.Builder().baseUrl(RetrofitBase.url).addConverterFactory(GsonConverterFactory.create()).build();
+        mRetrofitBase = mRetrofit.create(RetrofitBase.class);
+        Call<RetrofitMember> call = mRetrofitBase.login(mEditLoginEmail.getText().toString(), mEditPassword.getText().toString());
+        call.enqueue(new Callback<RetrofitMember>() {
+            @Override
+            public void onResponse(Call<RetrofitMember> call, Response<RetrofitMember> response) {
+                Log.i("--- email", response.body().getEmail());
+                Log.i("--- pwd", response.body().getPwd());
+//                RetrofitMember member = response.body();
+//                if(member != null) {
+//                    Log.i("--- email", member.getEmail());
+//                    Log.i("--- pwd", member.getPwd());
+//                }
 
-            preferences = getSharedPreferences("AUTO", Activity.MODE_PRIVATE);
-            prefEditor = preferences.edit();
-            prefEditor.putString("EMAIL", mEditLoginEmail.getText().toString());
-            prefEditor.putString("PASSWORD", mEditPassword.getText().toString());
-            prefEditor.commit();
+                Snackbar.make(view, "welcome", Snackbar.LENGTH_SHORT).show();
 
-            startActivity(new Intent(LoginActivity.this, MainActivity.class));
-            finish();
-        }
+                preferences = getSharedPreferences("AUTO", Activity.MODE_PRIVATE);
+                prefEditor = preferences.edit();
+                prefEditor.putString("EMAIL", mEditLoginEmail.getText().toString());
+                prefEditor.putString("PASSWORD", mEditPassword.getText().toString());
+                prefEditor.commit();
+
+                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                finish();
+            }
+
+            @Override
+            public void onFailure(Call<RetrofitMember> call, Throwable t) {
+                Snackbar.make(view, "login failed", Snackbar.LENGTH_SHORT).show();
+            }
+        });
+
+//        if(checkEmail(mEditLoginEmail.getText().toString())) {
+//            Snackbar.make(view, "login", Snackbar.LENGTH_SHORT).show();
+//
+//            preferences = getSharedPreferences("AUTO", Activity.MODE_PRIVATE);
+//            prefEditor = preferences.edit();
+//            prefEditor.putString("EMAIL", mEditLoginEmail.getText().toString());
+//            prefEditor.putString("PASSWORD", mEditPassword.getText().toString());
+//            prefEditor.commit();
+//
+//            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+//            finish();
+//        }
     }
 
     @SuppressWarnings("unused")

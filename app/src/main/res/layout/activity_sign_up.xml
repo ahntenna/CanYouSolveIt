@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".SignUpActivity"
+    android:background="#333333"
     android:gravity="center">
 
     <EditText
@@ -13,6 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
+        android:textColor="#009900"
         android:inputType="textEmailAddress"
         android:hint="E-MAIL"/>
 
@@ -21,6 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
+        android:textColor="#009900"
         android:inputType="textPassword"
         android:hint="PASSWORD"/>
 
@@ -29,6 +32,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
+        android:textColor="#009900"
         android:inputType="textPassword"
         android:hint="CHECK PASSWORD"/>
 
