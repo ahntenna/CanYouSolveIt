@@ -65,24 +65,26 @@ public class LoginActivity extends AppCompatActivity {
         call.enqueue(new Callback<RetrofitMember>() {
             @Override
             public void onResponse(Call<RetrofitMember> call, Response<RetrofitMember> response) {
-                Log.i("--- email", response.body().getEmail());
-                Log.i("--- pwd", response.body().getPwd());
-//                RetrofitMember member = response.body();
-//                if(member != null) {
-//                    Log.i("--- email", member.getEmail());
-//                    Log.i("--- pwd", member.getPwd());
-//                }
+                if(response.isSuccessful()) {
+                    RetrofitMember member = response.body();
+                    if(member.getResult().size() > 0) {     // db 검색 결과가 있는 경우. 즉, 계정 정보가 맞을 경우
+//                    Log.i("--- email", member.getResult().get(0).getEmail());
+//                    Log.i("--- pwd", member.getResult().get(0).getPwd());
 
-                Snackbar.make(view, "welcome", Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(view, "welcome", Snackbar.LENGTH_SHORT).show();
 
-                preferences = getSharedPreferences("AUTO", Activity.MODE_PRIVATE);
-                prefEditor = preferences.edit();
-                prefEditor.putString("EMAIL", mEditLoginEmail.getText().toString());
-                prefEditor.putString("PASSWORD", mEditPassword.getText().toString());
-                prefEditor.commit();
+                        preferences = getSharedPreferences("AUTO", Activity.MODE_PRIVATE);
+                        prefEditor = preferences.edit();
+                        prefEditor.putString("EMAIL", mEditLoginEmail.getText().toString());
+                        prefEditor.putString("PASSWORD", mEditPassword.getText().toString());
+                        prefEditor.commit();
 
-                startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                finish();
+                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                        finish();
+                    } else {
+                        Snackbar.make(view, "please check again account", Snackbar.LENGTH_SHORT).show();
+                    }
+                }
             }
 
             @Override
@@ -90,19 +92,6 @@ public class LoginActivity extends AppCompatActivity {
                 Snackbar.make(view, "login failed", Snackbar.LENGTH_SHORT).show();
             }
         });
-
-//        if(checkEmail(mEditLoginEmail.getText().toString())) {
-//            Snackbar.make(view, "login", Snackbar.LENGTH_SHORT).show();
-//
-//            preferences = getSharedPreferences("AUTO", Activity.MODE_PRIVATE);
-//            prefEditor = preferences.edit();
-//            prefEditor.putString("EMAIL", mEditLoginEmail.getText().toString());
-//            prefEditor.putString("PASSWORD", mEditPassword.getText().toString());
-//            prefEditor.commit();
-//
-//            startActivity(new Intent(LoginActivity.this, MainActivity.class));
-//            finish();
-//        }
     }
 
     @SuppressWarnings("unused")

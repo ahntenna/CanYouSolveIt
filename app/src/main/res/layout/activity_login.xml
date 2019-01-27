@@ -26,7 +26,7 @@
         android:layout_margin="20dp"
         android:inputType="textPassword"
         android:textColor="#009900"
-        android:text="root"
+        android:text="ahntenna"
         android:typeface="monospace"/>
 
     <Button

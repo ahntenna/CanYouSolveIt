@@ -18,6 +18,7 @@ import butterknife.OnClick;
 public class SignUpActivity extends AppCompatActivity {
 
     @BindView(R.id.edit_sign_acc) EditText mEditEmail;
+    @BindView(R.id.edit_sign_nick) EditText mEditNick;
     @BindView(R.id.edit_sign_pwd1) EditText mEditPwd1;
     @BindView(R.id.edit_sign_pwd2) EditText mEditPwd2;
     @BindView(R.id.bt_sign_ok) Button mBtnOk;

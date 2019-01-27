@@ -16,7 +16,18 @@
         android:layout_margin="20dp"
         android:textColor="#009900"
         android:inputType="textEmailAddress"
+        android:typeface="monospace"
         android:hint="E-MAIL"/>
+
+    <EditText
+        android:id="@+id/edit_sign_nick"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:textColor="#009900"
+        android:inputType="text"
+        android:typeface="monospace"
+        android:hint="NICKNAME"/>
 
     <EditText
         android:id="@+id/edit_sign_pwd1"
@@ -25,6 +36,7 @@
         android:layout_margin="20dp"
         android:textColor="#009900"
         android:inputType="textPassword"
+        android:typeface="monospace"
         android:hint="PASSWORD"/>
 
     <EditText
@@ -34,6 +46,7 @@
         android:layout_margin="20dp"
         android:textColor="#009900"
         android:inputType="textPassword"
+        android:typeface="monospace"
         android:hint="CHECK PASSWORD"/>
 
     <Button
@@ -43,6 +56,7 @@
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:layout_marginTop="50dp"
+        android:typeface="monospace"
         android:text="OK"/>
 
     <Button
@@ -52,6 +66,7 @@
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:layout_marginTop="20dp"
+        android:typeface="monospace"
         android:text="CANCEL"/>
 
 </LinearLayout>
