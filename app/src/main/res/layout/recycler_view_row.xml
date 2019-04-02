@@ -51,13 +51,13 @@
                 android:text="Title" />
 
             <TextView
-                android:id="@+id/row_content"
+                android:id="@+id/row_preview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="15sp"
                 android:textColor="#006600"
                 android:layout_marginLeft="10dp"
-                android:text="Content" />
+                android:text="Preview" />
 
             <LinearLayout
                 android:layout_width="match_parent"
