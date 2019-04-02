@@ -71,6 +71,8 @@ public class LoginActivity extends AppCompatActivity {
 //                    Log.i("--- email", member.getResult().get(0).getEmail());
 //                    Log.i("--- pwd", member.getResult().get(0).getPwd());
 
+                        Snackbar.make(view, "welcome", Snackbar.LENGTH_SHORT).show();
+
                         preferences = getSharedPreferences("AUTO", Activity.MODE_PRIVATE);
                         prefEditor = preferences.edit();
                         prefEditor.putString("EMAIL", mEditLoginEmail.getText().toString());

@@ -27,7 +27,7 @@ public class QuizAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.row_number) TextView mTextNumber;
         @BindView(R.id.row_title) TextView mTextTitle;
-        @BindView(R.id.row_preview) TextView mTextPreview;
+        @BindView(R.id.row_content) TextView mTextContent;
         @BindView(R.id.row_passer) TextView mTextPasser;
         @BindView(R.id.row_challenger) TextView mTextChallenger;
         @BindView(R.id.row_level) TextView mTextLevel;
@@ -79,10 +79,10 @@ public class QuizAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         MyViewHolder myViewHolder = (MyViewHolder)holder;
         myViewHolder.mTextNumber.setText(String.valueOf(mLists.get(position).getNumber()));
         myViewHolder.mTextTitle.setText(mLists.get(position).getTitle());
-        myViewHolder.mTextPreview.setText(mLists.get(position).getPreview());
+        myViewHolder.mTextContent.setText(mLists.get(position).getContent());
         myViewHolder.mTextPasser.setText("Passer:" + String.valueOf(mLists.get(position).getPasser()));
         myViewHolder.mTextChallenger.setText("Challenger:" + String.valueOf(mLists.get(position).getChallenger()));
-        myViewHolder.mTextLevel.setText(String.format("%.1f", mLists.get(position).getLevel()));
+        myViewHolder.mTextLevel.setText(String.valueOf(mLists.get(position).getLevel()));
     }
 
     @Override

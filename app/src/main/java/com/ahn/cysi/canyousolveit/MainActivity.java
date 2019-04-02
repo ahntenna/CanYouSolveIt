@@ -22,21 +22,13 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    private Retrofit mRetrofit;
-    private RetrofitBase mRetrofitBase;
-
     public static ArrayList<QuizList> mQuizLists;
 
-    private RecyclerView.LayoutManager mLayoutManager;
     @BindView(R.id.recycler_view) RecyclerView mRecyclerView;
+    private RecyclerView.LayoutManager mLayoutManager;
     @BindView(R.id.drawer_layout) DrawerLayout mDrawerLayout;
     @BindView(R.id.nav_drawer) NavigationView mNavigationView;
 
@@ -61,9 +53,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         mQuizLists = new ArrayList<>();
-        loadQuizList();
+        mQuizLists.add(new QuizList(1, "Test Title 1", "this is test quiz.\nvery difficult.", 4.8, 0, 3));
+        mQuizLists.add(new QuizList(2, "Test Title 2", "this is test quiz.\nvery difficult.", 3.2, 4, 7));
+        mQuizLists.add(new QuizList(4, "Test Title 3", "this is test quiz.\nvery difficult.", 2.5, 10, 12));
 
-        Snackbar.make(mRecyclerView, "Welcome! " + LoginActivity.preferences.getString("EMAIL", null).split("@")[0], Snackbar.LENGTH_SHORT).show();
+        QuizAdapter quizAdapter = new QuizAdapter(this, MainActivity.mQuizLists, mRecyclerView);
+        mRecyclerView.setAdapter(quizAdapter);
     }
 
     @Override
@@ -119,38 +114,4 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         return false;
     }
-
-    private void loadQuizList() {
-        mRetrofit = new Retrofit.Builder().baseUrl(RetrofitBase.url).addConverterFactory(GsonConverterFactory.create()).build();
-        mRetrofitBase = mRetrofit.create(RetrofitBase.class);
-        Call<RetrofitQuizList> call = mRetrofitBase.load();
-        call.enqueue(new Callback<RetrofitQuizList>() {
-            @Override
-            public void onResponse(Call<RetrofitQuizList> call, Response<RetrofitQuizList> response) {
-                if(response.isSuccessful()) {
-                    RetrofitQuizList quizList = response.body();
-
-                    for(int i=0; i<quizList.getResult().size(); i++) {     // db 검색 결과가 있는 경우. 즉, 계정 정보가 맞을 경우
-                        int id = quizList.getResult().get(i).getId();
-                        String title = quizList.getResult().get(i).getTitle();
-                        String preview = quizList.getResult().get(i).getPreview();
-                        String content = quizList.getResult().get(i).getContent();
-                        float level = quizList.getResult().get(i).getLevel();
-                        int passer = quizList.getResult().get(i).getPasser();
-                        int challenger = quizList.getResult().get(i).getChallenger();
-                        mQuizLists.add(new QuizList(id, title, preview, content, level, passer, challenger));
-                    }
-                    mRecyclerView.setAdapter(new QuizAdapter(MainActivity.this, mQuizLists, mRecyclerView));
-                } else {
-                    Snackbar.make(mRecyclerView, "failed to load quiz list", Snackbar.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<RetrofitQuizList> call, Throwable t) {
-                Snackbar.make(mRecyclerView, "failed to call", Snackbar.LENGTH_SHORT).show();
-            }
-        });
-    }
-
 }

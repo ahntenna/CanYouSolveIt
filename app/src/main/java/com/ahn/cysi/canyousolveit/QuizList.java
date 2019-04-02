@@ -7,14 +7,13 @@ package com.ahn.cysi.canyousolveit;
 public class QuizList {
 
     private int mNumber;
-    private String mTitle, mPreview, mContent;
+    private String mTitle, mContent;
     private double mLevel;
     private int mChallenger, mPasser;
 
-    public QuizList(int number, String title, String preview, String content, double level, int passer, int challenger) {
+    public QuizList(int number, String title, String content, double level, int passer, int challenger) {
         this.mNumber = number;
         this.mTitle = title;
-        this.mPreview = preview;
         this.mContent = content;
         this.mLevel = level;
         this.mPasser = passer;
@@ -27,10 +26,6 @@ public class QuizList {
 
     public String getTitle() {
         return mTitle;
-    }
-
-    public String getPreview() {
-        return mPreview;
     }
 
     public String getContent() {
